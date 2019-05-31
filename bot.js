@@ -44,8 +44,10 @@ const scrapeUrl = 'https://www.gumtree.com.au/s-jobs/sydney/internship/k0c9302l3
             // const para = await adText.$eval('p', (p)=>{
             //     console.log(p.innerHTML);
             // });
-            var text = await (await adText[0].getProperty('innerHTML')).jsonValue();
-            console.log(text, 'is text');
+            for (let i = 0; i < adText.length; i++){
+                var text = await (await adText[i].getProperty('innerHTML')).jsonValue();
+                console.log(text);
+            }
             //console.log('button clicked: ' + i);
         } catch (e) {
             console.log('rezcatch error: ' + e);
