@@ -27,17 +27,13 @@ const scrapeUrl = 'https://www.gumtree.com.au/s-jobs/sydney/internship/k0c9302l3
             button.click();
             await page.waitForSelector('.vip-ad-description__content');
             var adInfo = await page.$('.vip-ad-description__content');
-            var adText = await adInfo.$$('p');
+            var adText = await adInfo.$$('p,  #text, li');
     
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < adText.length; i++) {
                 var text = await (await adText[i].getProperty('innerHTML')).jsonValue();
                 console.log(text);
             }
         }
-
-        //-------------------This section clicks on a listing then prints the description of that listing------------//
-
-
         console.log('its showing');
         //await browser.close();
 
