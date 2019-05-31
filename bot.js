@@ -16,42 +16,26 @@ const scrapeUrl = 'https://www.gumtree.com.au/s-jobs/sydney/internship/k0c9302l3
         await page.waitForSelector('.user-ad-row'); //waits till a listing is loaded
         const listings = await page.$$('a.user-ad-row');  //document.querySelectorAll
         console.log(listings.length);
-        
-        // for (let i = 0; i < listings.length - 5; i++) {
-        //     try {
-        //         const button = await listings[i];
-        //         //console.log(button);
-        //         //console.log(button.)
-        //         console.log(i);
-        //         button.click();
-        //         console.log('button clicked: ' + i);
-        //     } catch (e) {
-        //         console.log('rezcatch error: ' + e);
-        //         break;
-        //     }
 
-        // }
-        try {
-            var button = await listings[0];
-            //console.log(button);
-            //console.log(button.)
-            //console.log(i);
+        for (let i = 0; i < listings.length; i++) {
+            console.log(i + '\n');
+            await page.goto(scrapeUrl, { waitUntil: 'networkidle2' });
+            await page.waitForSelector('.user-ad-row'); //waits till a listing is loaded
+            const listings = await page.$$('a.user-ad-row');  
+            const button = await listings[i];
+            
             button.click();
             await page.waitForSelector('.vip-ad-description__content');
             var adInfo = await page.$('.vip-ad-description__content');
             var adText = await adInfo.$$('p');
-            //console.log(adText.length + ' is num of para elements');
-            // const para = await adText.$eval('p', (p)=>{
-            //     console.log(p.innerHTML);
-            // });
-            for (let i = 0; i < adText.length; i++){
+    
+            for (let i = 0; i < 1; i++) {
                 var text = await (await adText[i].getProperty('innerHTML')).jsonValue();
                 console.log(text);
             }
-            //console.log('button clicked: ' + i);
-        } catch (e) {
-            console.log('rezcatch error: ' + e);
         }
+
+        //-------------------This section clicks on a listing then prints the description of that listing------------//
 
 
         console.log('its showing');
@@ -61,3 +45,4 @@ const scrapeUrl = 'https://www.gumtree.com.au/s-jobs/sydney/internship/k0c9302l3
         console.log('catch error: ' + e);
     }
 })();
+
